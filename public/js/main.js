@@ -4,40 +4,87 @@ var turn = 1;
 for(var i =1 ; i <= 9; i++){
     document.querySelector('#el'+i).addEventListener('click', clicked);
 }
+
 document.querySelector('#restart').addEventListener('click', function(){
     location.reload(true);
 });
+
+var changed = 1, type=2;
+document.querySelector('#game-type').addEventListener('click',gameChosen);
+function gameChosen(){
+    console.log('hrere');
+    if((changed%2)==0){
+        var e = document.getElementById("game-type");
+        type = e.options[e.selectedIndex].value;
+        console.log(type+"ene");
+    }
+    else{
+        type = 1;
+        console.log(type);
+    }
+    changed+=1;
+}
+
 
 //******************************Checking Turn******************************************
 checkTurn();
 
 function checkTurn(){
-    if(turn==1){
-        document.querySelector('#turn').innerHTML="Your Turn";
+    if(type == 1){
+        if(turn==1){
+            document.querySelector('#turn').innerHTML="Your Turn";
+        }
+        else{
+            document.querySelector('#turn').innerHTML="Thinking...";
+        }
     }
     else{
-        document.querySelector('#turn').innerHTML="Thinking...";
+        if(turn==1){
+            document.querySelector('#turn').innerHTML="Player 1";
+        }
+        else{
+            document.querySelector('#turn').innerHTML="Player 2";
+        }
     }
 }
 
 //******************************On Clicking*******************************************
 function clicked(){
     var any = this.id;
-    if(document.querySelector('#'+any).innerHTML == ""){
-        if(turn == 1){
-            document.querySelector('#'+any).innerHTML = "X";
-            turn = 2;
-            user.push(any);
-            if((user.length + comp.length) != 9||!(compMatched())||!(userMatched())){       //After user it goes for computer's turn
-                console.log("here");
-                setTimeout(compEasy,500);
-                checkTurn();
+    if(type == 1){
+        if(document.querySelector('#'+any).innerHTML == ""){
+            if(turn == 1){
+                document.querySelector('#'+any).innerHTML = "X";
+                turn = 2;
+                user.push(any);
+                if((user.length + comp.length) != 9||!(compMatched())||!(userMatched())){       //After user it goes for computer's turn
+                    console.log("here");
+                    setTimeout(compEasy,500);
+                    checkTurn();
+                }
+            }
+            else{
+                 document.querySelector('#'+any).innerHTML = "O";                  //Change Here FOR 2 Player Game
             }
         }
-        else{
-             document.querySelector('#'+any).innerHTML = "O";                  //Change Here FOR 2 Player Game
+    }
+    else if(type == 2){
+        if(document.querySelector('#'+any).innerHTML == ""){
+            if(turn == 1){
+                document.querySelector('#'+any).innerHTML = "X";
+                turn = 2;
+                user.push(any);
+                checkTurn();
+            }
+            else{
+                 document.querySelector('#'+any).innerHTML = "O";
+                 turn = 1;
+                 comp.push(any);
+                 checkTurn();
+            }
         }
     }
+
     checkMatch();
 }
 //******************************Computer Logic*****************************
@@ -91,12 +138,20 @@ var match8 = ["el3", "el6", "el9"];
 
 //-----------Checking Winner---------
 function checkMatch(){
-    if (userMatched()){
-        document.querySelector('#turn').innerHTML = "🎊🎉 You Won 🎉🎊";  
+    if (userMatched() && type == 1){
+        document.querySelector('#turn').innerHTML = "🎊🎉 You Win  🎉🎊";
         gameOver();
     }
-    else if(compMatched()){
-        document.querySelector('#turn').innerHTML =  "💻 Computer Won 😮";
+    else if(compMatched() && type == 1){
+        document.querySelector('#turn').innerHTML =  "💻 Computer Wins 😮";
+        gameOver();
+    }
+    else if(userMatched() && type == 2){
+        document.querySelector('#turn').innerHTML =  "😄 Player 1 Wins 👍";
+        gameOver();
+    }
+    else if(compMatched() && type == 2){
+        document.querySelector('#turn').innerHTML =  "😉 Player 2 Wins ✌";
         gameOver();
     }
     else if((user.length+comp.length) == 9){
