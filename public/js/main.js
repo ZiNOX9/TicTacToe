@@ -1,3 +1,4 @@
+
 //*******************************Add Listener***************************************
 var turn = 1;
 
@@ -9,20 +10,21 @@ document.querySelector('#restart').addEventListener('click', function(){
     location.reload(true);
 });
 
-var changed = 1, type=2;
-document.querySelector('#game-type').addEventListener('click',gameChosen);
+//********************************Checking Game Type************************************
+
+var type=2;
+for(var i=1; i<=2; i++){
+    document.getElementById('type'+i).addEventListener('click',gameChosen);
+}
 function gameChosen(){
-    console.log('hrere');
-    if((changed%2)==0){
-        var e = document.getElementById("game-type");
-        type = e.options[e.selectedIndex].value;
-        console.log(type+"ene");
+    if(document.getElementById('type1').checked){
+        type=1;
+        console.log(type + " type1");
     }
-    else{
-        type = 1;
-        console.log(type);
+    else if(document.getElementById('type2').checked){
+        type=2;
+        console.log(type + " type2");
     }
-    changed+=1;
 }
 
 
@@ -35,7 +37,7 @@ function checkTurn(){
             document.querySelector('#turn').innerHTML="Your Turn";
         }
         else{
-            document.querySelector('#turn').innerHTML="Thinking...";
+            document.querySelector('#turn').innerHTML="<p class='thinking'>Thinking<span>.</span><span>.</span><span>.</span></p>";
         }
     }
     else{
@@ -58,13 +60,12 @@ function clicked(){
                 turn = 2;
                 user.push(any);
                 if((user.length + comp.length) != 9||!(compMatched())||!(userMatched())){       //After user it goes for computer's turn
-                    console.log("here");
                     setTimeout(compEasy,500);
                     checkTurn();
                 }
             }
             else{
-                 document.querySelector('#'+any).innerHTML = "O";                  //Change Here FOR 2 Player Game
+                 document.querySelector('#'+any).innerHTML = "O";
             }
         }
     }
@@ -87,9 +88,11 @@ function clicked(){
 
     checkMatch();
 }
-//******************************Computer Logic*****************************
 
-function compEasy(){     //this is an easy version...difficult version is on the way !!!!
+
+//******************************Computer Logic Easy*****************************
+
+function compEasy(){     //this is an easy version
     var chose=findClick();
     if(chose == 40){
         compEasy();
@@ -117,6 +120,20 @@ function findClick(){     //Computer choosing a random place for it's turn
         }
     }
     return choose;
+}
+//********************Computer logic Tuff***********************
+
+function compTuff(){
+    chose = fightBack();
+    document.querySelector('#el'+chose).click();
+    turn = 1;
+    comp.push('el'+chose);
+    checkTurn();
+    checkMatch();
+}
+
+function fightBack(){
+
 }
 
 //**************************DECLARATIONS************************
