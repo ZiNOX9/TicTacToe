@@ -19,6 +19,18 @@ td{
 	border-radius: 0px !important;
 }
 
+/*--------------------- Types  ------------------------*/
+.playing{
+	width: 100%;
+	font-size: 28px !important;
+	background-color: white;
+}
+
+.not-playing{
+	display: none;
+	position: absolute;
+}
+
 /*------------------Thinking animation-------------------*/
 .thinking span {
   font-size: 100px;
@@ -56,9 +68,8 @@ input[type="radio"] {
 }
 
 input[type="radio"] + label {
-  color: #2D76B4;
+  color: white;
   font-size: 20px;
-  cursor: pointer;
 }
 
 input[type="radio"] + label span {
@@ -70,15 +81,14 @@ input[type="radio"] + label span {
   -moz-border-radius:0%;
   border-radius: 0%;
   padding: 5px;
-  border: 2px solid #2D76B4;
-}
-
-input[type="radio"] + label span {
-  background-color: white;
-}
-input[type="radio"]:checked + label span {
+  border: 2px solid white;
   background-color: #2D76B4;
 }
+
+input[type="radio"]:checked + label span {
+	background-color: white;
+}
 input[type="radio"]:checked + label{
-  color: white;
+  color: #2D76B4;
+
 }

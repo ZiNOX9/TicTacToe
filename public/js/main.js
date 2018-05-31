@@ -12,19 +12,20 @@ document.querySelector('#restart').addEventListener('click', function(){
 
 //********************************Checking Game Type************************************
 
-var type=2;
+var type=1;
 for(var i=1; i<=2; i++){
     document.getElementById('type'+i).addEventListener('click',gameChosen);
 }
 function gameChosen(){
     if(document.getElementById('type1').checked){
         type=1;
-        console.log(type + " type1");
     }
     else if(document.getElementById('type2').checked){
         type=2;
-        console.log(type + " type2");
     }
+    // else{
+    //     type =3;
+    // }
 }
 
 
@@ -52,6 +53,21 @@ function checkTurn(){
 
 //******************************On Clicking*******************************************
 function clicked(){
+    // document.getElementById("type1").disabled = true;
+    // document.getElementById("type2").disabled = true;
+
+    if(type == 1){
+        document.getElementById("label1").textContent = "Playing With Computer!!";
+        document.getElementById("label1").classList.add("playing");
+        document.getElementById("label2").classList.add("not-playing");
+
+    }
+    else if(type == 2){
+        document.getElementById("label2").classList.add("playing");
+        document.getElementById("label2").textContent = "Two Player Game!!";
+        document.getElementById("label1").classList.add("not-playing");
+    }
+
     var any = this.id;
     if(type == 1){
         if(document.querySelector('#'+any).innerHTML == ""){
@@ -60,7 +76,7 @@ function clicked(){
                 turn = 2;
                 user.push(any);
                 if((user.length + comp.length) != 9||!(compMatched())||!(userMatched())){       //After user it goes for computer's turn
-                    setTimeout(compEasy,500);
+                    setTimeout(compTuff,500);
                     checkTurn();
                 }
             }
@@ -90,51 +106,144 @@ function clicked(){
 }
 
 
-//******************************Computer Logic Easy*****************************
+//******************************Computer Logic Easy (Dead)*****************************
 
-function compEasy(){     //this is an easy version
-    var chose=findClick();
-    if(chose == 40){
-        compEasy();
-        return 10;
-    }
-    document.querySelector('#el'+chose).click();
-    turn = 1;
-    comp.push('el'+chose);
-    checkTurn();
-    checkMatch();
-}
 
 function findClick(){     //Computer choosing a random place for it's turn
     var choose = Math.floor(Math.random() * 9)+1;
+    console.log("Choose "+choose);
+    var got = checkFill(choose);
+    console.log("Got "+got);
+    if(got){
+        findClick();
+    }
+    else{
+        console.log("Choosing "+choose);
+        return choose;
+    }
+}
+
+function checkFill(check){
     for (var c = 0 ; c<=(comp.length); c++){
-        if(comp[c] == ('el'+choose)){
-            findClick();
-            return 40;
+        if(comp[c] == ('el'+check)){
+            checkFill();
+            return true;
         }
     }
     for(var d=0;d<=(user.length)-1;d++){
-        if(user[d] == ('el'+choose)){
-            findClick();
-            return 40;
+        if(user[d] == ('el'+check)){
+            checkFill();
+            return true;
         }
     }
-    return choose;
+    return false;
 }
+
 //********************Computer logic Tuff***********************
 
+
 function compTuff(){
-    chose = fightBack();
-    document.querySelector('#el'+chose).click();
+    var nextTurn = "el"+5;
+    for(var pat=0; pat<=8; pat++){
+        console.log("Looping...");
+        if(pat == 8 && nextTurn == "el99"){
+            returned = findClick();
+            console.log("After choosing got : "+ returned);
+            nextTurn = "el"+ returned;
+        }
+        else if(nextTurn == "el99" || checkFill((nextTurn).substring(2))){
+            console.log("Next Turn1: "+ nextTurn);
+            console.log("Checking click: " + checkFill((nextTurn).substring(2)))
+            nextTurn = fightBack(matches[pat],user);
+            console.log("Next Turn2: "+ nextTurn);
+        }
+        else{
+            break;
+        }
+    }
+    console.log("Next Turn3: "+ nextTurn);
+    document.querySelector('#'+nextTurn).click();
     turn = 1;
-    comp.push('el'+chose);
+    comp.push(''+nextTurn);
     checkTurn();
     checkMatch();
 }
 
-function fightBack(){
+function fightBack(matchPat, withPat){
 
+    var matching = [];
+
+    console.log(matchPat);
+    console.log(withPat);
+    for(var m =0; m<=(withPat.length)-1; m++){
+        if(withPat[m]==matchPat[0]){
+            matching.push(true);
+            break;
+        }
+        else if(m==(withPat.length)-1){
+            matching.push(false);
+            break;
+        }
+    }
+
+    for(var n =0; n<=(withPat.length)-1; n++){
+        if(withPat[n]==matchPat[1]){
+            matching.push(true);
+            break;
+        }
+        else if(n==(withPat.length)-1){
+            matching.push(false);
+            break;
+        }
+    }
+
+    for(var o =0; o<=(withPat.length)-1; o++){
+        if(withPat[o]==matchPat[2]){
+            matching.push(true);
+            break;
+        }
+        else if(o==(withPat.length)-1){
+            matching.push(false);
+            break;
+        }
+    }
+
+    // if(matching.length<3){
+    //     matching.push(false);
+    // }
+
+    console.log("Matching"+matching);
+
+    function checkFalse(){
+        console.log("Matching"+matching);
+        var returning;
+        if(!matching[0]){
+            returning = matchPat[0];
+        }
+        else if(!matching[1]){
+            returning = matchPat[1];
+        }
+        else {
+            returning = matchPat[2];
+        }
+        console.log("Returning: "+returning);
+        if(checkFill((returning).substring(2))){
+            return "el"+99;
+        }
+        else{
+            return returning;
+        }
+    }
+
+    if(matching[0] && matching[1] || matching[2] && matching[0] || matching[2] && matching[1]){
+        return checkFalse();
+    }
+    else{
+        return "el"+99;
+    }
 }
+
+
 
 //**************************DECLARATIONS************************
 
@@ -149,17 +258,18 @@ var match5 = ["el2", "el5", "el8"];
 var match6 = ["el3", "el5", "el7"];
 var match7 = ["el8", "el9", "el7"];
 var match8 = ["el3", "el6", "el9"];
+var matches = [match1,match2,match3,match4,match5,match6,match7,match8]
 
 
 //*************************Checking Patterns*********************
 
 //-----------Checking Winner---------
 function checkMatch(){
-    if (userMatched() && type == 1){
+    if (userMatched() && (type == 1 || type == 3)){
         document.querySelector('#turn').innerHTML = "🎊🎉 You Win  🎉🎊";
         gameOver();
     }
-    else if(compMatched() && type == 1){
+    else if(compMatched() && (type == 1 || type == 3)){
         document.querySelector('#turn').innerHTML =  "💻 Computer Wins 😮";
         gameOver();
     }
@@ -186,22 +296,28 @@ function gameOver(){
 //----------Matching Patterns-------------
 function userMatched(){
     var ugave;
-    if(checkInside(match1,user) || checkInside(match2,user) || checkInside(match3,user) || checkInside(match4,user) || checkInside(match5,user) || checkInside(match6,user) || checkInside(match7,user) || checkInside(match8,user)){
-        ugave = true;
-    }
-    else{
-        ugave = false;
+    for(var us=0; us<8; us++){
+        if(checkInside(matches[us],user)){
+            ugave = true;
+            break;
+        }
+        else{
+            ugave = false;
+        }
     }
     return ugave;
 }
 
 function compMatched(){
     var cgave;
-    if(checkInside(match1,comp) || checkInside(match2,comp) || checkInside(match3,comp) || checkInside(match4,comp) || checkInside(match5,comp) || checkInside(match6,comp) || checkInside(match7,comp) || checkInside(match8,comp)){
-        cgave = true;
-    }
-    else{
-        cgave = false;
+    for(var cs=0; cs<8; cs++){
+        if(checkInside(matches[cs],comp)){
+            cgave = true;
+            break;
+        }
+        else{
+            cgave = false;
+        }
     }
     return cgave;
 }
