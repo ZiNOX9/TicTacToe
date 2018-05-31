@@ -53,8 +53,6 @@ function checkTurn(){
 
 //******************************On Clicking*******************************************
 function clicked(){
-    // document.getElementById("type1").disabled = true;
-    // document.getElementById("type2").disabled = true;
 
     if(type == 1){
         document.getElementById("label1").textContent = "Playing With Computer!!";
@@ -75,7 +73,7 @@ function clicked(){
                 document.querySelector('#'+any).innerHTML = "X";
                 turn = 2;
                 user.push(any);
-                if((user.length + comp.length) != 9||!(compMatched())||!(userMatched())){       //After user it goes for computer's turn
+                if((user.length + comp.length) != 9||(!(compMatched())&&!(userMatched()))){       //After user it goes for computer's turn
                     setTimeout(compTuff,500);
                     checkTurn();
                 }
@@ -116,6 +114,7 @@ function findClick(){     //Computer choosing a random place for it's turn
     console.log("Got "+got);
     if(got){
         findClick();
+        return;
     }
     else{
         console.log("Choosing "+choose);
@@ -144,23 +143,20 @@ function checkFill(check){
 
 function compTuff(){
     var nextTurn = "el"+5;
+
     for(var pat=0; pat<=8; pat++){
-        console.log("Looping...");
         if(pat == 8 && nextTurn == "el99"){
             returned = findClick();
-            console.log("After choosing got : "+ returned);
             nextTurn = "el"+ returned;
         }
         else if(nextTurn == "el99" || checkFill((nextTurn).substring(2))){
-            console.log("Next Turn1: "+ nextTurn);
-            console.log("Checking click: " + checkFill((nextTurn).substring(2)))
             nextTurn = fightBack(matches[pat],user);
-            console.log("Next Turn2: "+ nextTurn);
         }
         else{
             break;
         }
     }
+
     console.log("Next Turn3: "+ nextTurn);
     document.querySelector('#'+nextTurn).click();
     turn = 1;
@@ -208,9 +204,6 @@ function fightBack(matchPat, withPat){
         }
     }
 
-    // if(matching.length<3){
-    //     matching.push(false);
-    // }
 
     console.log("Matching"+matching);
 
