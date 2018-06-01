@@ -113,8 +113,7 @@ function findClick(){     //Computer choosing a random place for it's turn
     var got = checkFill(choose);
     console.log("Got "+got);
     if(got){
-        findClick();
-        return;
+        return findClick();
     }
     else{
         console.log("Choosing "+choose);
@@ -125,13 +124,13 @@ function findClick(){     //Computer choosing a random place for it's turn
 function checkFill(check){
     for (var c = 0 ; c<=(comp.length); c++){
         if(comp[c] == ('el'+check)){
-            checkFill();
+            // checkFill();
             return true;
         }
     }
     for(var d=0;d<=(user.length)-1;d++){
         if(user[d] == ('el'+check)){
-            checkFill();
+            // checkFill();
             return true;
         }
     }
@@ -142,7 +141,7 @@ function checkFill(check){
 
 
 function compTuff(){
-    var nextTurn = "el"+5;
+    var nextTurn = "el"+99;
 
     for(var pat=0; pat<=8; pat++){
         if(pat == 8 && nextTurn == "el99"){
