@@ -1,4 +1,3 @@
-
 //*******************************Add Listener***************************************
 var turn = 1;
 
@@ -33,20 +32,21 @@ function gameChosen(){
 checkTurn();
 
 function checkTurn(){
+    var turnSelect = document.querySelector('#turn');
     if(type == 1){
         if(turn==1){
-            document.querySelector('#turn').innerHTML="Your Turn";
+            turnSelect.innerHTML="Your Turn";
         }
         else{
-            document.querySelector('#turn').innerHTML="<p class='thinking'>Thinking<span>.</span><span>.</span><span>.</span></p>";
+            turnSelect.innerHTML="<p class='thinking'>Thinking<span>.</span><span>.</span><span>.</span></p>";
         }
     }
     else{
         if(turn==1){
-            document.querySelector('#turn').innerHTML="Player 1";
+            turnSelect.innerHTML="Player 1";
         }
         else{
-            document.querySelector('#turn').innerHTML="Player 2";
+            turnSelect.innerHTML="Player 2";
         }
     }
 }
@@ -102,7 +102,6 @@ function clicked(){
 
     checkMatch();
 }
-
 
 //******************************Computer Logic Easy (Dead)*****************************
 
@@ -286,6 +285,7 @@ function gameOver(){
 }
 
 //----------Matching Patterns-------------
+
 function userMatched(){
     var ugave;
     for(var us=0; us<8; us++){
@@ -316,6 +316,7 @@ function compMatched(){
 
 
 //----------Checking Inputs---------
+
 function checkInside(arr1, arr2){
     var progress = [];
 
