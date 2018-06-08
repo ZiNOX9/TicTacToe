@@ -11,7 +11,7 @@ document.querySelector('#restart').addEventListener('click', function(){
 
 //********************************Checking Game Type************************************
 
-var type=1;
+var type=3;
 for(var i=1; i<=2; i++){
     document.getElementById('type'+i).addEventListener('click',gameChosen);
 }
@@ -22,9 +22,9 @@ function gameChosen(){
     else if(document.getElementById('type2').checked){
         type=2;
     }
-    // else{
-    //     type =3;
-    // }
+    else{
+        type =3;
+    }
 }
 
 
@@ -33,7 +33,7 @@ checkTurn();
 
 function checkTurn(){
     var turnSelect = document.querySelector('#turn');
-    if(type == 1){
+    if(type == 1 || type == 3){
         if(turn==1){
             turnSelect.innerHTML="Your Turn";
         }
@@ -58,12 +58,19 @@ function clicked(){
         document.getElementById("label1").textContent = "Playing With Computer!!";
         document.getElementById("label1").classList.add("playing");
         document.getElementById("label2").classList.add("not-playing");
-
+        document.getElementById("label3").classList.add("not-playing");
     }
     else if(type == 2){
         document.getElementById("label2").classList.add("playing");
         document.getElementById("label2").textContent = "Two Player Game!!";
         document.getElementById("label1").classList.add("not-playing");
+        document.getElementById("label3").classList.add("not-playing");
+    }
+    else{
+        document.getElementById("label3").classList.add("playing");
+        document.getElementById("label3").textContent = "Try Your best!!";
+        document.getElementById("label1").classList.add("not-playing");
+        document.getElementById("label2").classList.add("not-playing");
     }
 
     var any = this.id;
@@ -99,6 +106,22 @@ function clicked(){
             }
         }
     }
+    else{
+        if(document.querySelector('#'+any).innerHTML == ""){
+            if(turn == 1){
+                document.querySelector('#'+any).innerHTML = "X";
+                turn = 2;
+                user.push(any);
+                if((user.length + comp.length) != 9||(!(compMatched())&&(userMatched()))){
+                    setTimeout(compDone,500);
+                    checkTurn();
+                }
+            }
+            else{
+                 document.querySelector('#'+any).innerHTML = "O";
+            }
+        }
+    }
 
     checkMatch();
 }
@@ -108,19 +131,16 @@ function clicked(){
 
 function findClick(){     //Computer choosing a random place for it's turn
     var choose = Math.floor(Math.random() * 9)+1;
-    console.log("Choose "+choose);
     var got = checkFill(choose);
-    console.log("Got "+got);
     if(got){
         return findClick();
     }
     else{
-        console.log("Choosing "+choose);
         return choose;
     }
 }
 
-function checkFill(check){
+function checkFill(check){  //Checking if the nexturn is filled or not
     for (var c = 0 ; c<=(comp.length); c++){
         if(comp[c] == ('el'+check)){
             // checkFill();
@@ -155,7 +175,6 @@ function compTuff(){
         }
     }
 
-    console.log("Next Turn3: "+ nextTurn);
     document.querySelector('#'+nextTurn).click();
     turn = 1;
     comp.push(''+nextTurn);
@@ -163,12 +182,9 @@ function compTuff(){
     checkMatch();
 }
 
-function fightBack(matchPat, withPat){
+function fightBack(matchPat, withPat){  //Telling if the MAtch is being completed and giving the value to stop the match
 
     var matching = [];
-
-    console.log(matchPat);
-    console.log(withPat);
     for(var m =0; m<=(withPat.length)-1; m++){
         if(withPat[m]==matchPat[0]){
             matching.push(true);
@@ -202,11 +218,7 @@ function fightBack(matchPat, withPat){
         }
     }
 
-
-    console.log("Matching"+matching);
-
     function checkFalse(){
-        console.log("Matching"+matching);
         var returning;
         if(!matching[0]){
             returning = matchPat[0];
@@ -217,7 +229,6 @@ function fightBack(matchPat, withPat){
         else {
             returning = matchPat[2];
         }
-        console.log("Returning: "+returning);
         if(checkFill((returning).substring(2))){
             return "el"+99;
         }
@@ -234,6 +245,124 @@ function fightBack(matchPat, withPat){
     }
 }
 
+//**************************************Comp Done***********************************************
+
+function compDone(){
+    var nextTurn = "el"+99;
+    //Check if computer is completing a match
+    for(var pat=0; pat<8; pat++){
+        if(nextTurn == "el99" ||checkFill((nextTurn).substring(2))){
+            nextTurn = fightBack(matches[pat],comp);
+        }
+    }
+
+    //Check if users completing match
+    for(var pat=0; pat<8; pat++){
+        if(nextTurn == "el99" ||checkFill((nextTurn).substring(2))){
+            nextTurn = fightBack(matches[pat],user);
+        }
+    }
+    //Check the users placement
+    if(nextTurn == "el99"){
+        nextTurn = 'el'+accordingUser();
+    }
+
+    //completing Comp's Move
+    document.querySelector('#'+nextTurn).click();
+    turn = 1;
+    comp.push(''+nextTurn);
+    checkTurn();
+    checkMatch();
+}
+
+function accordingUser(){
+    var see;
+    eve = [1,3];
+    eve2 = [1,7];
+    eve3 = [7,9];
+    eve4 = [3,9];
+    even = [1,3,7,9];
+    var lastUser = (user[((user.length)-1)].substring(2))-0;
+    if(user.length == 1){
+        if(lastUser%2 == 0){
+            if(lastUser == 2){
+                ins = eve;
+            }
+            else if(lastUser == 4){
+                ins = eve2;
+            }
+            else if(lastUser == 8){
+                ins = eve3;
+            }
+            else{
+                ins = eve4;
+            }
+            see = ins[(Math.floor(Math.random()*2))];
+        }
+        else if(lastUser == 5){
+            see = even[(Math.floor(Math.random()*4))];
+        }
+        else{
+            see = 5;
+        }
+    }
+    else{
+        see = returnPat().substring(2);
+    }
+    if(checkFill(see)){
+        return accordingUser();
+    }
+    return see;
+}
+
+function twoArray(arr1, arr2){
+    for(one =0 ; one<arr1.length; one++){
+        for(two = 0 ; two<arr2.length; two++){
+            if(arr1[one] == arr2[two]){
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+function returnPat(){
+    var watching;
+    for(var cloop=0; cloop<comp.length; cloop++){
+        for(var cpat=0 ; cpat<=8; cpat++){
+            if(cpat == 8){
+                return "el"+findClick();
+            }
+            if(matches[cpat].includes(comp[cloop])){  //1
+                if(twoArray(matches[cpat], user)){
+                }
+                else{
+
+                    if(matches[cpat].includes("el"+5) && !(checkFill(5))){
+                        watching = "el"+5;
+                    }
+                    else if(!(checkFill((matches[cpat][0]).substring(2)))){
+                        watching = (matches[cpat][0]);
+                    }
+                    else if(!(checkFill((matches[cpat][2]).substring(2)))){
+
+                        watching = (matches[cpat][2]);
+                    }
+                    else{
+                        watching = (matches[cpat][1]);
+                    }
+                    if(checkFill(watching.sub(2))){
+
+                        continue;
+                    }
+                    else{
+                        return watching;
+                    }
+                }
+            }
+        }
+    }
+}
 
 
 //**************************DECLARATIONS************************
