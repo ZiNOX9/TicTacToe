@@ -372,8 +372,8 @@ var comp = [];
 //----------Patterns------------
 var match1 = ["el1", "el2", "el3"];
 var match2 = ["el1", "el4", "el7"];
-var match3 = ["el1", "el5", "el9"];
-var match4 = ["el4", "el5", "el6"];
+var match3 = ["el4", "el5", "el6"];
+var match4 = ["el1", "el5", "el9"];
 var match5 = ["el2", "el5", "el8"];
 var match6 = ["el3", "el5", "el7"];
 var match7 = ["el8", "el9", "el7"];
