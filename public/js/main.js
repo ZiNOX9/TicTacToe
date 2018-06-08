@@ -277,29 +277,10 @@ function compDone(){
 
 function accordingUser(){
     var see;
-    eve = [1,3];
-    eve2 = [1,7];
-    eve3 = [7,9];
-    eve4 = [3,9];
     even = [1,3,7,9];
     var lastUser = (user[((user.length)-1)].substring(2))-0;
     if(user.length == 1){
-        if(lastUser%2 == 0){
-            if(lastUser == 2){
-                ins = eve;
-            }
-            else if(lastUser == 4){
-                ins = eve2;
-            }
-            else if(lastUser == 8){
-                ins = eve3;
-            }
-            else{
-                ins = eve4;
-            }
-            see = ins[(Math.floor(Math.random()*2))];
-        }
-        else if(lastUser == 5){
+        if(lastUser%2 == 0 || lastUser==5){
             see = even[(Math.floor(Math.random()*4))];
         }
         else{
@@ -373,11 +354,12 @@ var comp = [];
 var match1 = ["el1", "el2", "el3"];
 var match2 = ["el1", "el4", "el7"];
 var match3 = ["el4", "el5", "el6"];
-var match4 = ["el1", "el5", "el9"];
-var match5 = ["el2", "el5", "el8"];
-var match6 = ["el3", "el5", "el7"];
-var match7 = ["el8", "el9", "el7"];
-var match8 = ["el3", "el6", "el9"];
+var match4 = ["el3", "el6", "el9"];
+var match5 = ["el1", "el5", "el9"];
+var match6 = ["el2", "el5", "el8"];
+var match7 = ["el3", "el5", "el7"];
+var match8 = ["el8", "el9", "el7"];
+
 var matches = [match1,match2,match3,match4,match5,match6,match7,match8]
 
 
