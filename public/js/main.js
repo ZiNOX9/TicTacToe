@@ -277,11 +277,30 @@ function compDone(){
 
 function accordingUser(){
     var see;
+    eve= [1,3];
+    eve2 = [1,7];
+    eve3 = [3,9];
+    eve4 = [3,7]
     even = [1,3,7,9];
     var lastUser = (user[((user.length)-1)].substring(2))-0;
     if(user.length == 1){
-        if(lastUser%2 == 0 || lastUser==5){
-            see = even[(Math.floor(Math.random()*4))];
+        if(lastUser%2 == 0){
+            if(lastUser ==2){
+                ins = eve;
+            }
+            else if(lastUser == 4){
+                ins = eve2;
+            }
+            else if(lastUser == 6){
+                ins = eve3;
+            }
+            else{
+                ins = eve4;
+            }
+            see = ins[(Math.floor(Math.random()*2))];
+        }
+        else if(lastUser == 5){
+            see = even[(Math.floor(Math.random()*4))]
         }
         else{
             see = 5;
@@ -307,6 +326,16 @@ function twoArray(arr1, arr2){
     return false;
 }
 
+function checkUser(element){
+    console.log("CheckUser"+ element);
+    for(var ch = 0; ch<8; ch++){
+        if(matches[ch].includes(element)&& twoArray(matches[ch],user)){
+            return true;
+        }
+    }
+    return false;
+}
+
 function returnPat(){
     var watching;
     for(var cloop=0; cloop<comp.length; cloop++){
@@ -314,7 +343,7 @@ function returnPat(){
             if(cpat == 8){
                 return "el"+findClick();
             }
-            if(matches[cpat].includes(comp[cloop])){  //1
+            if(matches[cpat].includes(comp[cloop])){
                 if(twoArray(matches[cpat], user)){
                 }
                 else{
@@ -322,18 +351,21 @@ function returnPat(){
                     if(matches[cpat].includes("el"+5) && !(checkFill(5))){
                         watching = "el"+5;
                     }
-                    else if(!(checkFill((matches[cpat][0]).substring(2)))){
-                        watching = (matches[cpat][0]);
+                    else if( !(checkFill((matches[cpat][0]).substring(2))) && checkUser(matches[cpat][0]) ){
+                            watching = (matches[cpat][0]);
                     }
-                    else if(!(checkFill((matches[cpat][2]).substring(2)))){
-
-                        watching = (matches[cpat][2]);
+                    else if( !(checkFill((matches[cpat][0]).substring(2))) && checkUser(matches[cpat][0]) ){
+                        if(checkUser(matches[cpat][1])){
+                            watching = (matches[cpat][1]);
+                        }
                     }
                     else{
-                        watching = (matches[cpat][1]);
+                        if(checkUser(matches[cpat][2])){
+                            watching = (matches[cpat][2]);
+                        }
                     }
-                    if(checkFill(watching.sub(2))){
 
+                    if(checkFill(watching.substring(2))){
                         continue;
                     }
                     else{
@@ -358,7 +390,7 @@ var match4 = ["el3", "el6", "el9"];
 var match5 = ["el1", "el5", "el9"];
 var match6 = ["el2", "el5", "el8"];
 var match7 = ["el3", "el5", "el7"];
-var match8 = ["el8", "el9", "el7"];
+var match8 = ["el7", "el8", "el9"];
 
 var matches = [match1,match2,match3,match4,match5,match6,match7,match8]
 
