@@ -316,11 +316,11 @@ function accordingUser(){
 }
 
 function twoArray(arr1, arr2){
+    console.log("Iside 2arr = "+arr1+" 2 " + arr2);
     for(one =0 ; one<arr1.length; one++){
-        for(two = 0 ; two<arr2.length; two++){
-            if(arr1[one] == arr2[two]){
-                return true;
-            }
+        if(arr2.includes(arr1[one])){
+            console.log("Returning true");
+            return true;
         }
     }
     return false;
@@ -333,31 +333,29 @@ function checkUser(element){
             return true;
         }
     }
-    return false;
+    // return false;
 }
 
 function returnPat(){
     var watching;
     for(var cloop=0; cloop<comp.length; cloop++){
-        for(var cpat=0 ; cpat<=8; cpat++){
-            if(cpat == 8){
-                return "el"+findClick();
-            }
+        console.log(comp.length);
+        for(var cpat=0 ; cpat<8; cpat++){
+            console.log("All "+matches[cpat]);
             if(matches[cpat].includes(comp[cloop])){
                 if(twoArray(matches[cpat], user)){
                 }
                 else{
-
+                    console.log("Without user "+matches[cpat]);
                     if(matches[cpat].includes("el"+5) && !(checkFill(5))){
+                        console.log("Matching 5");
                         watching = "el"+5;
                     }
                     else if( !(checkFill((matches[cpat][0]).substring(2))) && checkUser(matches[cpat][0]) ){
                             watching = (matches[cpat][0]);
                     }
-                    else if( !(checkFill((matches[cpat][0]).substring(2))) && checkUser(matches[cpat][0]) ){
-                        if(checkUser(matches[cpat][1])){
+                    else if( !(checkFill((matches[cpat][1]).substring(2))) && checkUser(matches[cpat][1]) ){
                             watching = (matches[cpat][1]);
-                        }
                     }
                     else{
                         if(checkUser(matches[cpat][2])){
@@ -374,6 +372,10 @@ function returnPat(){
                 }
             }
         }
+        if(cloop == comp.length-1){
+            console.log("giving random");
+            return "el"+findClick();
+        }
     }
 }
 
@@ -387,8 +389,8 @@ var match1 = ["el1", "el2", "el3"];
 var match2 = ["el1", "el4", "el7"];
 var match3 = ["el4", "el5", "el6"];
 var match4 = ["el3", "el6", "el9"];
-var match5 = ["el1", "el5", "el9"];
-var match6 = ["el2", "el5", "el8"];
+var match5 = ["el2", "el5", "el8"];
+var match6 = ["el1", "el5", "el9"];
 var match7 = ["el3", "el5", "el7"];
 var match8 = ["el7", "el8", "el9"];
 
