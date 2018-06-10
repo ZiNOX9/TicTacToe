@@ -75,12 +75,12 @@ input[type="radio"] {
   position: absolute;
 }
 
-input[type="radio"] + label {
+input[type="radio"] + label{
   color: white;
   font-size: 20px;
 }
 
-input[type="radio"] + label span {
+input[type="radio"] + label span{
   display: inline-block;
   width: 15rem;
   height: 100%;
@@ -101,6 +101,7 @@ input[type="radio"]:checked + label{
 }
 
 
+
 /*------------------------Media Queries---------------------------*/
 
 @media (max-width: 768px) {
@@ -112,7 +113,7 @@ input[type="radio"]:checked + label{
 			font-size: 80px;
 	}
 	input[type="radio"] + label span{
-		width: 118px;
+		width: 120px;
 	}
 	.tb{
 		margin: 2px;

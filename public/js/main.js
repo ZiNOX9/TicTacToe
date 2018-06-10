@@ -55,20 +55,20 @@ function checkTurn(){
 function clicked(){
 
     if(type == 1){
-        document.getElementById("label1").textContent = "Playing With Computer!!";
+        document.getElementById("label1").innerHTML = "Playing With Computer!! <i class='fas fa-laptop'></i>";
         document.getElementById("label1").classList.add("playing");
         document.getElementById("label2").classList.add("not-playing");
         document.getElementById("label3").classList.add("not-playing");
     }
     else if(type == 2){
         document.getElementById("label2").classList.add("playing");
-        document.getElementById("label2").textContent = "Two Player Game!!";
+        document.getElementById("label2").innerHTML = "Two Player Game!! <i class='fas fa-user-friends'></i>";
         document.getElementById("label1").classList.add("not-playing");
         document.getElementById("label3").classList.add("not-playing");
     }
     else{
         document.getElementById("label3").classList.add("playing");
-        document.getElementById("label3").textContent = "Try Your best!!";
+        document.getElementById("label3").innerHTML = "Try Your best!! <i class='far fa-thumbs-up'></i>";
         document.getElementById("label1").classList.add("not-playing");
         document.getElementById("label2").classList.add("not-playing");
     }
