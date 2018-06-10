@@ -113,7 +113,7 @@ function clicked(){
                 turn = 2;
                 user.push(any);
                 if((user.length + comp.length) != 9||(!(compMatched())&&(userMatched()))){
-                    setTimeout(compDone,500);
+                    setTimeout(compDone,250);
                     checkTurn();
                 }
             }
@@ -280,7 +280,7 @@ function accordingUser(){
     eve= [1,3];
     eve2 = [1,7];
     eve3 = [3,9];
-    eve4 = [3,7]
+    eve4 = [9,7]
     even = [1,3,7,9];
     var lastUser = (user[((user.length)-1)].substring(2))-0;
     if(user.length == 1){
@@ -338,6 +338,7 @@ function checkUser(element){
 
 function returnPat(){
     var watching;
+    var selecting =0;
     for(var cloop=0; cloop<comp.length; cloop++){
         console.log(comp.length);
         for(var cpat=0 ; cpat<8; cpat++){
@@ -362,14 +363,25 @@ function returnPat(){
                             watching = (matches[cpat][2]);
                         }
                     }
-
+                    console.log(selecting + "selecting");
                     if(checkFill(watching.substring(2))){
+                        console.log(selecting+ "for check filling");
                         continue;
                     }
-                    else{
+                    else if(selecting == "el5" && !(checkFill(5)) ){
+                        watching  = "el5";
                         return watching;
                     }
+                    else if(cpat !=7 && cloop <= comp.length-1){
+                        selecting = watching;
+                        console.log(selecting + "for continuing");
+                        continue;
+                    }
                 }
+            }
+            if(cpat == 7 && cloop == comp.length-1 ){
+                console.log(selecting + "Fnal");
+                return watching;
             }
         }
         if(cloop == comp.length-1){
@@ -385,14 +397,22 @@ function returnPat(){
 var user = [];
 var comp = [];
 //----------Patterns------------
+// var match1 = ["el1", "el2", "el3"];
+// var match2 = ["el1", "el4", "el7"];
+// var match3 = ["el4", "el5", "el6"];
+// var match4 = ["el3", "el6", "el9"];
+// var match5 = ["el2", "el5", "el8"];
+// var match6 = ["el1", "el5", "el9"];
+// var match7 = ["el3", "el5", "el7"];
+// var match8 = ["el7", "el8", "el9"];
 var match1 = ["el1", "el2", "el3"];
-var match2 = ["el1", "el4", "el7"];
-var match3 = ["el4", "el5", "el6"];
-var match4 = ["el3", "el6", "el9"];
+var match2 = ["el1", "el5", "el9"];
+var match3 = ["el1", "el4", "el7"];
+var match4 = ["el4", "el5", "el6"];
 var match5 = ["el2", "el5", "el8"];
-var match6 = ["el1", "el5", "el9"];
+var match6 = ["el7", "el8", "el9"];
 var match7 = ["el3", "el5", "el7"];
-var match8 = ["el7", "el8", "el9"];
+var match8 = ["el3", "el6", "el9"];
 
 var matches = [match1,match2,match3,match4,match5,match6,match7,match8]
 
@@ -402,23 +422,23 @@ var matches = [match1,match2,match3,match4,match5,match6,match7,match8]
 //-----------Checking Winner---------
 function checkMatch(){
     if (userMatched() && (type == 1 || type == 3)){
-        document.querySelector('#turn').innerHTML = "🎊🎉 You Win  🎉🎊";
+        document.querySelector('#turn').innerHTML = "🎊You Win🎉";
         gameOver();
     }
     else if(compMatched() && (type == 1 || type == 3)){
-        document.querySelector('#turn').innerHTML =  "💻 Computer Wins 😮";
+        document.querySelector('#turn').innerHTML =  "💻Computer Wins😮";
         gameOver();
     }
     else if(userMatched() && type == 2){
-        document.querySelector('#turn').innerHTML =  "😄 Player 1 Wins 👍";
+        document.querySelector('#turn').innerHTML =  "😄Player 1 Wins👍";
         gameOver();
     }
     else if(compMatched() && type == 2){
-        document.querySelector('#turn').innerHTML =  "😉 Player 2 Wins ✌";
+        document.querySelector('#turn').innerHTML =  "😉Player 2 Wins✌";
         gameOver();
     }
     else if((user.length+comp.length) == 9){
-        document.querySelector('#turn').innerHTML = "😑 It's A DRAW 😶";
+        document.querySelector('#turn').innerHTML = "😑It's A DRAW😶";
         gameOver();
     }
 }
