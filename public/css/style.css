@@ -90,26 +90,22 @@ input[type="radio"] + label span{
   border-radius: 0%;
   padding: 5px;
   border: 2px solid white;
-  background-color: #2D76B4;
+  background-color: rgba(45, 118, 180, 1);
 }
 
 input[type="radio"]:checked + label span {
 	background-color: white;
 }
 input[type="radio"]:checked + label{
-  color: #2D76B4;
+  color: rgba(45, 118, 180, 1);
 }
-
-
 
 /*------------------------Media Queries---------------------------*/
 
 @media (max-width: 768px) {
 	td{
-			border: 3px solid rgba(255,255,255,0.5);
 			width: 130px;
 			height: 130px;
-			text-align: center;
 			font-size: 80px;
 	}
 	input[type="radio"] + label span{
@@ -126,5 +122,12 @@ input[type="radio"]:checked + label{
 	}
 	.display-4{
 		font-size: 2.0rem;
+	}
+	.display-3{
+		font-size: 2.5rem;
+	}
+	label .ok{
+		position: absolute;
+		display: none !important;
 	}
 }

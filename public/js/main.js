@@ -9,10 +9,12 @@ document.querySelector('#restart').addEventListener('click', function(){
     location.reload(true);
 });
 
+
+
 //********************************Checking Game Type************************************
 
 var type=3;
-for(var i=1; i<=2; i++){
+for(var i=1; i<=3; i++){
     document.getElementById('type'+i).addEventListener('click',gameChosen);
 }
 function gameChosen(){
