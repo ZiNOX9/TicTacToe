@@ -20,6 +20,12 @@
 	<meta name="theme-color" content="#185973">
 
 	<title>Tic-Tac-Toe</title>
+	<script>
+		if (location.protocol != 'https:')
+		{
+		 location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
+		}
+	</script>
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
