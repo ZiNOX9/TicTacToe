@@ -413,7 +413,6 @@ function checkPat(lastMove){
                 }
             })
             if(!(twoArray(matches[pats], comp)) || twoArray(matches[pats], tempUser)) {
-
                 if (!(checkFill(matches[pats][0].substring(2))) && checkComp(matches[pats][0])){
                     return matches[pats][0];
                 } 
@@ -439,11 +438,11 @@ var comp = [];
 //----------Patterns------------
 var match1 = ["el2", "el1", "el3"];
 var match2 = ["el1", "el5", "el9"];
-var match3 = ["el4", "el1", "el7"];
-var match4 = ["el4", "el5", "el6"];
-var match5 = ["el2", "el5", "el8"];
-var match6 = ["el8", "el7", "el9"];
-var match7 = ["el3", "el5", "el7"];
+var match3 = ["el3", "el5", "el7"];
+var match4 = ["el4", "el1", "el7"];
+var match5 = ["el4", "el5", "el6"];
+var match6 = ["el2", "el5", "el8"];
+var match7 = ["el8", "el7", "el9"];
 var match8 = ["el3", "el6", "el9"];
 
 var matches = [match1,match2,match3,match4,match5,match6,match7,match8]
