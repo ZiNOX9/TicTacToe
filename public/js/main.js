@@ -143,7 +143,7 @@ function findClick(){     //Computer choosing a random place for it's turn
 }
 
 function checkFill(check){  //Checking if the nexturn is filled or not
-    for (var c = 0 ; c<=(comp.length); c++){
+    for (var c = 0 ; c<=(comp.length)-1; c++){
         if(comp[c] == ('el'+check)){
             // checkFill();
             return true;
@@ -151,7 +151,7 @@ function checkFill(check){  //Checking if the nexturn is filled or not
     }
     for(var d=0;d<=(user.length)-1;d++){
         if(user[d] == ('el'+check)){
-            // checkFill();
+            // checkFill(); 
             return true;
         }
     }
@@ -318,10 +318,8 @@ function accordingUser(){
 }
 
 function twoArray(arr1, arr2){
-    console.log("Iside 2arr = "+arr1+" 2 " + arr2);
     for(one =0 ; one<arr1.length; one++){
         if(arr2.includes(arr1[one])){
-            console.log("Returning true");
             return true;
         }
     }
@@ -329,7 +327,6 @@ function twoArray(arr1, arr2){
 }
 
 function checkUser(element){
-    console.log("CheckUser"+ element);
     for(var ch = 0; ch<8; ch++){
         if(matches[ch].includes(element)&& twoArray(matches[ch],user)){
             return true;
@@ -338,20 +335,26 @@ function checkUser(element){
     // return false;
 }
 
+function checkComp(element) {
+    for (var ch = 0; ch < 8; ch++) {
+        if (matches[ch].includes(element) && twoArray(comp, matches[ch])) {
+            return true;
+        }
+    }
+    // return false;
+}
+
+
 function returnPat(){
     var watching;
     var selecting =0;
     for(var cloop=0; cloop<comp.length; cloop++){
-        console.log(comp.length);
         for(var cpat=0 ; cpat<8; cpat++){
-            console.log("All "+matches[cpat]);
             if(matches[cpat].includes(comp[cloop])){
                 if(twoArray(matches[cpat], user)){
                 }
                 else{
-                    console.log("Without user "+matches[cpat]);
                     if(matches[cpat].includes("el"+5) && !(checkFill(5))){
-                        console.log("Matching 5");
                         watching = "el"+5;
                     }
                     else if( !(checkFill((matches[cpat][0]).substring(2))) && checkUser(matches[cpat][0]) ){
@@ -365,32 +368,67 @@ function returnPat(){
                             watching = (matches[cpat][2]);
                         }
                     }
-                    console.log(selecting + "selecting");
                     if(checkFill(watching.substring(2))){
-                        console.log(selecting+ "for check filling");
                         continue;
                     }
                     else if(selecting == "el5" && !(checkFill(5)) ){
                         watching  = "el5";
                         return watching;
                     }
+                    else if (userPlace(user[user.length - 1])){
+                        watching = checkPat(user[user.length - 1]);
+                        return watching;
+                    }
                     else if(cpat !=7 && cloop <= comp.length-1){
                         selecting = watching;
-                        console.log(selecting + "for continuing");
                         continue;
                     }
                 }
             }
             if(cpat == 7 && cloop == comp.length-1 && selecting !=0){
-                console.log(selecting + "Fnal");
                 return watching;
             }
         }
         if(cloop == comp.length-1){
-            console.log("giving random");
             return "el"+findClick();
         }
     }
+}
+
+
+
+function userPlace(lastMove){
+    if(checkUser(lastMove) && (checkComp(lastMove)) && !(checkPat(lastMove) == 'z')){
+        return true;
+    }
+    return false;
+}
+
+function checkPat(lastMove){
+    for (var pats = 0; pats < 8; pats++) {
+        if (matches[pats].includes(lastMove)) {
+            tempUser = user.filter(function(value){
+                if(value != lastMove){
+                    return value;
+                }
+            })
+            if(!(twoArray(matches[pats], comp)) || twoArray(matches[pats], tempUser)) {
+
+                if (!(checkFill(matches[pats][0].substring(2))) && checkComp(matches[pats][0])){
+                    return matches[pats][0];
+                } 
+                else if (!(checkFill(matches[pats][1].substring(2))) && checkComp(matches[pats][1])){
+                    return matches[pats][1];
+                } 
+                else {           
+                    if (checkComp(matches[pats][2]) && !(checkFill(matches[pats][1].substring(2)))) {
+                        return matches[pats][2];
+                    }
+                }
+            }
+        }
+    }
+    return 'z';
 }
 
 
@@ -399,12 +437,12 @@ function returnPat(){
 var user = [];
 var comp = [];
 //----------Patterns------------
-var match1 = ["el1", "el2", "el3"];
+var match1 = ["el2", "el1", "el3"];
 var match2 = ["el1", "el5", "el9"];
-var match3 = ["el1", "el4", "el7"];
+var match3 = ["el4", "el1", "el7"];
 var match4 = ["el4", "el5", "el6"];
 var match5 = ["el2", "el5", "el8"];
-var match6 = ["el7", "el8", "el9"];
+var match6 = ["el8", "el7", "el9"];
 var match7 = ["el3", "el5", "el7"];
 var match8 = ["el3", "el6", "el9"];
 
