@@ -1,7 +1,6 @@
-//This is the service worker with the Cache-first network
-
-var CACHE = 'pwabuilder-precache';
-var precacheFiles = [
+var dataCacheName = 'template-pwa';
+var cacheName = 'template-pwa';
+var filesToCache = [
     './',
     '/',
     '/*',
@@ -12,64 +11,118 @@ var precacheFiles = [
     'js/tether.min.js',
     'css/bootstrap.css',
     'css/font-awesome.min.css',
-    'css/style.css',
+    'css/style.css'
 ];
 
-//Install stage sets up the cache-array to configure pre-cache content
-self.addEventListener('install', function (evt) {
-    console.log('[PWA Builder] The service worker is being installed.');
-    evt.waitUntil(precache().then(function () {
-        console.log('[PWA Builder] Skip waiting on install');
-        return self.skipWaiting();
-    }));
+self.addEventListener('install', function (e) {
+    console.log('[ServiceWorker] Install');
+    e.waitUntil(
+        caches.open(cacheName).then(function (cache) {
+            console.log('[ServiceWorker] Caching app shell');
+            return cache.addAll(filesToCache);
+        })
+    );
 });
 
-
-//allow sw to control of current page
-self.addEventListener('activate', function (event) {
-    console.log('[PWA Builder] Claiming clients for current page');
+self.addEventListener('activate', function (e) {
+    console.log('[ServiceWorker] Activate');
+    e.waitUntil(
+        caches.keys().then(function (keyList) {
+            return Promise.all(keyList.map(function (key) {
+                if (key !== cacheName && key !== dataCacheName) {
+                    console.log('[ServiceWorker] Removing old cache', key);
+                    return caches.delete(key);
+                }
+            }));
+        })
+    );
     return self.clients.claim();
 });
 
-self.addEventListener('fetch', function (evt) {
-    console.log('[PWA Builder] The service worker is serving the asset.' + evt.request.url);
-    evt.respondWith(fromCache(evt.request).catch(fromServer(evt.request)));
-    evt.waitUntil(update(evt.request));
+self.addEventListener('fetch', function (e) {
+    console.log('[Service Worker] Fetch', e.request.url);
+    e.respondWith(
+        caches.match(e.request).then(function (response) {
+            return response || fetch(e.request);
+        })
+    );
 });
 
 
-function precache() {
-    return caches.open(CACHE).then(function (cache) {
-        return cache.addAll(precacheFiles);
-    });
-}
-
-function fromCache(request) {
-    //we pull files from the cache first thing so we can show them fast
-    return caches.open(CACHE).then(function (cache) {
-        return cache.match(request).then(function (matching) {
-            return matching || Promise.reject('no-match');
-        });
-    });
-}
-
-function update(request) {
-    //this is where we call the server to get the newest version of the 
-    //file to use the next time we show view
-    return caches.open(CACHE).then(function (cache) {
-        return fetch(request).then(function (response) {
-            return cache.put(request, response);
-        });
-    });
-}
-
-function fromServer(request) {
-    //this is the fallback if it is not in the cache to go to the server and get it
-    return fetch(request).then(function (response) { return response });
-}
 
 
+// //This is the service worker with the Cache-first network
 
+// var CACHE = 'pwabuilder-precache';
+// var precacheFiles = [
+//     './',
+//     '/',
+//     '/*',
+//     'index.html',
+//     'js/bootstrap.min.js',
+//     'js/jquery.min.js',
+//     'js/main.js',
+//     'js/tether.min.js',
+//     'css/bootstrap.css',
+//     'css/font-awesome.min.css',
+//     'css/style.css',
+// ];
+
+// //Install stage sets up the cache-array to configure pre-cache content
+// self.addEventListener('install', function (evt) {
+//     console.log('[PWA Builder] The service worker is being installed.');
+//     evt.waitUntil(precache().then(function () {
+//         console.log('[PWA Builder] Skip waiting on install');
+//         return self.skipWaiting();
+//     }));
+// });
+
+
+// //allow sw to control of current page
+// self.addEventListener('activate', function (event) {
+//     console.log('[PWA Builder] Claiming clients for current page');
+//     return self.clients.claim();
+// });
+
+// self.addEventListener('fetch', function (evt) {
+//     console.log('[PWA Builder] The service worker is serving the asset.' + evt.request.url);
+//     evt.respondWith(fromCache(evt.request).catch(fromServer(evt.request)));
+//     evt.waitUntil(update(evt.request));
+// });
+
+
+// function precache() {
+//     return caches.open(CACHE).then(function (cache) {
+//         return cache.addAll(precacheFiles);
+//     });
+// }
+
+// function fromCache(request) {
+//     //we pull files from the cache first thing so we can show them fast
+//     return caches.open(CACHE).then(function (cache) {
+//         return cache.match(request).then(function (matching) {
+//             return matching || Promise.reject('no-match');
+//         });
+//     });
+// }
+
+// function update(request) {
+//     //this is where we call the server to get the newest version of the 
+//     //file to use the next time we show view
+//     return caches.open(CACHE).then(function (cache) {
+//         return fetch(request).then(function (response) {
+//             return cache.put(request, response);
+//         });
+//     });
+// }
+
+// function fromServer(request) {
+//     //this is the fallback if it is not in the cache to go to the server and get it
+//     return fetch(request).then(function (response) { return response });
+// }
+
+
+//===============================================================================
 
 // /**
 //  * Cache version, change name to force reload
@@ -137,45 +190,47 @@ function fromServer(request) {
 // });
 
 
-/**
- * If we don't have a matching response, we return the result of a call to fetch,
- * which will make a network request and return the data if anything can be retrieved from the network. 
- */
-function returnFromServer(event){
+// /**
+//  * If we don't have a matching response, we return the result of a call to fetch,
+//  * which will make a network request and return the data if anything can be retrieved from the network. 
+//  */
+// function returnFromServer(event){
     
-    // IMPORTANT: Clone the request. A request is a stream and
-    // can only be consumed once. Since we are consuming this
-    // once by cache and once by the browser for fetch, we need
-    // to clone the response.
-    var fetchRequest = event.request.clone();
+//     // IMPORTANT: Clone the request. A request is a stream and
+//     // can only be consumed once. Since we are consuming this
+//     // once by cache and once by the browser for fetch, we need
+//     // to clone the response.
+//     var fetchRequest = event.request.clone();
 
-    var url = event.request.clone();
+//     var url = event.request.clone();
     
-    return fetch(fetchRequest).then(
-        function(response) {
+//     return fetch(fetchRequest).then(
+//         function(response) {
             
-            // Check if we received a valid response
-            if(!response || response.status !== 200 || response.type !== 'basic') {
-                  return null;
-            }
+//             // Check if we received a valid response
+//             if(!response || response.status !== 200 || response.type !== 'basic') {
+//                   return null;
+//             }
 
-            // IMPORTANT: Clone the response. A response is a stream
-            // and because we want the browser to consume the response
-            // as well as the cache consuming the response, we need
-            // to clone it so we have two streams.
-            var responseToCache = response.clone();
+//             // IMPORTANT: Clone the response. A response is a stream
+//             // and because we want the browser to consume the response
+//             // as well as the cache consuming the response, we need
+//             // to clone it so we have two streams.
+//             var responseToCache = response.clone();
 
-            caches.open(CACHE_VERSION)
-                .then(function(cache) {
-                    cache.put(event.request, responseToCache);
-                });
+//             caches.open(CACHE_VERSION)
+//                 .then(function(cache) {
+//                     cache.put(event.request, responseToCache);
+//                 });
 
-            return response;
-        }
-    ); // return.fetch().then()
+//             return response;
+//         }
+//     ); // return.fetch().then()
 
-}
+// }
 
+
+//=========================================================================
 
 // var doCache = true;
 
@@ -201,18 +256,18 @@ function returnFromServer(event){
 //       caches.open(CACHE_NAME).then(function(cache) {
 //           fetch("asset-manifest.json").then(response => {
 //               response.json()
-//             }).then(assets => {
-            //   cache.addAll([
-            //        '/',
-            //        'index.html',
-            //        'js/bootstrap.min.js',
-            //        'js/jquery.min.js',
-            //        'js/main.js',
-            //        'js/tether.min.js',
-            //        'css/bootstrap.css',
-            //        'css/font-awesome.min.css',
-            //        'css/style.css',
-            //    ])
+//            }).then(assets => {
+//               cache.addAll([
+//                    '/',
+//                    'index.html',
+//                    'js/bootstrap.min.js',
+//                    'js/jquery.min.js',
+//                    'js/main.js',
+//                    'js/tether.min.js',
+//                    'css/bootstrap.css',
+//                    'css/font-awesome.min.css',
+//                    'css/style.css',
+//                ])
 //               console.log('cached');
 //             })
 //         })
