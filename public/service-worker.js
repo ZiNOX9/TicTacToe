@@ -264,29 +264,49 @@ self.addEventListener("activate", event => {
   );
 });
 
-self.addEventListener('install', function(event) {
-  if (doCache) {
-    event.waitUntil(
-      caches.open(CACHE_NAME).then(function(cache) {
-          fetch("asset-manifest.json").then(response => {
-              response.json()
-           }).then(assets => {
-              cache.addAll([
-                   'index.html',
-                   'js/bootstrap.min.js',
-                   'js/jquery.min.js',
-                   'js/main.js',
-                   'js/tether.min.js',
-                   'css/bootstrap.css',
-                   'css/font-awesome.min.css',
-                   'css/style.css',
-               ])
-              console.log('cached');
-            })
+this.addEventListener('install', function (event) {
+   event.waitUntil(
+       caches.open(CACHE_NAME).then(function(cache) {
+            console.log('Installing...');
+            return cache.addAll([
+                'index.html',
+                'js/bootstrap.min.js',
+                'js/jquery.min.js',
+                'js/main.js',
+                'js/tether.min.js',
+                'css/bootstrap.css',
+                'css/font-awesome.min.css',
+                'css/style.css',
+            ]);
+        }).catch(function(a) {
+            console.log(a);
         })
-    );
-  }
+    ); // waitUntil
 });
+
+// self.addEventListener('install', function(event) {
+//   if (doCache) {
+//     event.waitUntil(
+//       caches.open(CACHE_NAME).then(function(cache) {
+//           fetch("asset-manifest.json").then(response => {
+//               response.json()
+//            }).then(assets => {
+//               cache.addAll([
+//                    'index.html',
+//                    'js/bootstrap.min.js',
+//                    'js/jquery.min.js',
+//                    'js/main.js',
+//                    'js/tether.min.js',
+//                    'css/bootstrap.css',
+//                    'css/font-awesome.min.css',
+//                    'css/style.css',
+//                ])
+//               console.log('cached');
+//             })
+//         })
+//     );
+//   }
+// });
 
 self.addEventListener('fetch', function(event) {
     if (doCache) {
