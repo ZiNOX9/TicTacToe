@@ -1,9 +1,6 @@
 var dataCacheName = 'template-pwa';
 var cacheName = 'template-pwa';
 var filesToCache = [
-    './',
-    '/',
-    '/*',
     'index.html',
     'js/bootstrap.min.js',
     'js/jquery.min.js',
