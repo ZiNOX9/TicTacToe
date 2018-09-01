@@ -115,7 +115,7 @@ function clicked(){
                 turn = 2;
                 user.push(any);
                 if((user.length + comp.length) != 9||(!(compMatched())&&(userMatched()))){
-                    setTimeout(compDone,250);
+                    setTimeout(compDone,150);
                     checkTurn();
                 }
             }
@@ -438,7 +438,7 @@ var comp = [];
 //----------Patterns------------
 var match1 = ["el2", "el1", "el3"];
 var match2 = ["el1", "el5", "el9"];
-var match3 = ["el3", "el5", "el7"];
+var match3 = ["el5", "el3", "el7"];
 var match4 = ["el4", "el1", "el7"];
 var match5 = ["el4", "el5", "el6"];
 var match6 = ["el2", "el5", "el8"];

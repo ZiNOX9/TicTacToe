@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<!-- <script>
+	<script>
 		if (location.protocol != 'https:')
 		{
 		 location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
 		}
-	</script> -->
+	</script>
 	<meta name="viewport" content="initial-scale=1.0, width=device-width" >
 	<meta name="Description" content="This is Responsive and Engaging tic-tac-toe game, that you cadd to your homescreen/desktop and use it anytime">
 	<meta charset="utf-8">
@@ -85,32 +85,22 @@
 	<script type="text/javascript" src="js/main.js"></script>
 
 	<script>
-    //   if ('serviceWorker' in navigator) {
-    //     window.addEventListener('load', function() {
-    //       navigator.serviceWorker.register('service-worker.js').then(function(registration) {
-    //         // Registration was successful
-    //         console.log('ServiceWorker registration successful with scope: ', registration.scope);
-    //       }, function(err) {
-    //         // registration failed :(
-    //         console.log('ServiceWorker registration failed: ', err);
-    //       }).catch(function(err) {
-    //         console.log(err)
-    //       });
-    //     });
-    //   }
-	  //  else {
-    //     console.log('service worker is not supported');
-		//   }
-		if (navigator.serviceWorker.controller) {
-				console.log('[PWA Builder] active service worker found, no need to register')
-		} else {
-				//Register the ServiceWorker
-				navigator.serviceWorker.register('pwabuilder-sw.js', {
-					scope: './'
-				}).then(function (reg) {
-					console.log('Service worker has been registered for scope:' + reg.scope);
-				});
-		}
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('service-worker.js').then(function(registration) {
+            // Registration was successful
+            console.log('ServiceWorker registration successful with scope: ', registration.scope);
+          }, function(err) {
+            // registration failed :(
+            console.log('ServiceWorker registration failed: ', err);
+          }).catch(function(err) {
+            console.log(err)
+          });
+        });
+      }
+		else {
+        	console.log('service worker is not supported');
+		  }
     </script>
 
 </body>
