@@ -124,8 +124,9 @@
 /**
  * Cache version, change name to force reload
  */
-var CACHE_VERSION = 'v1';
-
+var CACHE_VERSION = 'v2';
+var cacheName = 'v2';
+var dataCacheName = 'v2';
 
 /**
  * Stuff to put in the cache at install
@@ -182,6 +183,21 @@ this.addEventListener('fetch', function(event) {
         })
 
     }());
+});
+
+self.addEventListener('activate', function (e) {
+    console.log('[ServiceWorker] Activate');
+    e.waitUntil(
+        caches.keys().then(function (keyList) {
+            return Promise.all(keyList.map(function (key) {
+                if (key !== cacheName && key !== dataCacheName) {
+                    console.log('[ServiceWorker] Removing old cache', key);
+                    return caches.delete(key);
+                }
+            }));
+        })
+    );
+    return self.clients.claim();
 });
 
 
