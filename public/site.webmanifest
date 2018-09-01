@@ -1,6 +1,6 @@
 {
     "name": "Tic-Tac-Toe",
-    "short_name": "Tic-Tac-Toe",
+    "short_name": "TicTac",
     "start_url": "/",
     "scope": "./",
     "icons": [
@@ -18,5 +18,4 @@
     "theme_color": "#185973",
     "background_color": "#185973",
     "display": "standalone",
-    "orientation": "protrait"
 }

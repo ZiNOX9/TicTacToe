@@ -4,6 +4,7 @@ var CACHE = 'pwabuilder-precache';
 var precacheFiles = [
     './',
     '/',
+    '/*',
     'index.html',
     'js/bootstrap.min.js',
     'js/jquery.min.js',
