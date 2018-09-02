@@ -1,4 +1,4 @@
-var CACHE_NAME = 'swa-cache-v2';
+var CACHE_NAME = 'swa-cache-v1';
 var urlsToCache = [
     '/',
     'index.html',

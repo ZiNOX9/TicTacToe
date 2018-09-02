@@ -437,13 +437,13 @@ function checkPat(lastMove){
 var user = [];
 var comp = [];
 //----------Patterns------------
-var match1 = ["el3", "el6", "el9"];
-var match2 = ["el2", "el1", "el3"];
-var match3 = ["el5", "el1", "el9"];
-var match4 = ["el5", "el3", "el7"];
-var match5 = ["el4", "el1", "el7"];
-var match6 = ["el4", "el5", "el6"];
-var match7 = ["el2", "el5", "el8"];
+var match1 = ["el2", "el1", "el3"];
+var match2 = ["el5", "el1", "el9"];
+var match3 = ["el5", "el3", "el7"];
+var match4 = ["el4", "el1", "el7"];
+var match5 = ["el4", "el5", "el6"];
+var match6 = ["el2", "el5", "el8"];
+var match7 = ["el3", "el6", "el9"];
 var match8 = ["el8", "el7", "el9"];
 
 
