@@ -1,28 +1,48 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<script>
+	<!-- <script>
 		if (location.protocol != 'https:')
 		{
 		 location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
 		}
-	</script>
+	</script> -->
 	<meta name="viewport" content="initial-scale=1.0, width=device-width" >
-	<meta name="Description" content="This is Responsive and Engaging tic-tac-toe game, that you cadd to your homescreen/desktop and use it anytime">
+	<meta name="Description" content="An Engaging Tic-Tac-Toe game, that you can add to your homescreen/desktop and play anytime">
 	<meta charset="utf-8">
 
-	<!-- Favicon Code -->
-	<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-	<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-	<link rel="icon" type="image/png" sizes="192x192" href="android-chrome-192x192.png">
-	<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-	<link rel="mask-icon" href="safari-pinned-tab.svg" color="#185973">
+	<!-- ================== Favicon Code================= -->
+
+	<!-- Apple Touch Icons -->
+	<link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+
+	<!-- Favicons -->
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="194x194" href="/favicon-194x194.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	
+	<!-- Others -->
+	<link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png">
+	
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#1d759f">
+	
+	
 	<meta name="apple-mobile-web-app-title" content="Tic-Tac-Toe">
 	<meta name="application-name" content="Tic-Tac-Toe">
 	<meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
-	<meta name="msapplication-TileColor" content="#185973">
-	<meta name="theme-color" content="#185973">
+	<meta name="msapplication-TileColor" content="#0a6486">
+	<meta name="msapplication-TileImage" content="/mstile-144x144.png">
+	<meta name="theme-color" content="#0a6486">
+
 	<link rel="manifest" href="site.webmanifest">
 
 	<title>Tic-Tac-Toe</title>
@@ -86,21 +106,17 @@
 
 	<script>
       if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function() {
-          navigator.serviceWorker.register('service-worker.js').then(function(registration) {
-            // Registration was successful
-            console.log('ServiceWorker registration successful with scope: ', registration.scope);
-          }, function(err) {
-            // registration failed :(
-            console.log('ServiceWorker registration failed: ', err);
-          }).catch(function(err) {
-            console.log(err)
-          });
-        });
-      }
-		else {
-        	console.log('service worker is not supported');
-		  }
+			window.addEventListener('load', function () {
+				navigator.serviceWorker.register('/sw.js').then(function (registration) {
+					// Registration was successful
+					registration.update();
+					console.log('ServiceWorkerA registration successful with scope: ', registration.scope);
+				}, function (err) {
+					// registration failed :(
+					console.log('ServiceWorkerA registration failed: ', err);
+				});
+			});
+		}
     </script>
 
 </body>

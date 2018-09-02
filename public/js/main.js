@@ -412,6 +412,7 @@ function checkPat(lastMove){
                     return value;
                 }
             })
+            console.log(matches[pats]);
             if(!(twoArray(matches[pats], comp)) || twoArray(matches[pats], tempUser)) {
                 if (!(checkFill(matches[pats][0].substring(2))) && checkComp(matches[pats][0])){
                     return matches[pats][0];
@@ -437,7 +438,7 @@ var user = [];
 var comp = [];
 //----------Patterns------------
 var match1 = ["el2", "el1", "el3"];
-var match2 = ["el1", "el5", "el9"];
+var match2 = ["el5", "el1", "el9"];
 var match3 = ["el5", "el3", "el7"];
 var match4 = ["el4", "el1", "el7"];
 var match5 = ["el4", "el5", "el6"];
