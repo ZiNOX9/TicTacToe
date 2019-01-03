@@ -1,31 +1,31 @@
-var CACHE_NAME = 'swar-cache-v1';
+var CACHE_NAME = 'tictactoe-cache-v1';
 var urlsToCache = [
     '/',
-    'index.html',
+    '/index.html',
+    '/favicons/',
     'js/bootstrap.min.js',
     'js/jquery.min.js',
     'js/main.js',
     'js/tether.min.js',
-    'css/bootstrap.css',
-    'css/font-awesome.min.css',
-    'css/style.css',
+    'css/bootstrap.css',    
+    'css/style.css'
 ];
 
 
 self.addEventListener('install', function (event) {
-    console.log("ServiceWorkerA Installing...");
+    console.log("ServiceWorker Installing...");
     // Perform install steps
     event.waitUntil(
         caches.open(CACHE_NAME)
             .then(function (cache) {
-                console.log('ServiceWorkerA Opened cache');
+                console.log('ServiceWorker Opened cache');
                 return cache.addAll(urlsToCache);
             })
     );
 });
 
 self.addEventListener('activate', function (event) {
-    console.log("ServiceWorkerA Activating...");
+    console.log("ServiceWorker Activating...");
     var cacheWhitelist = [CACHE_NAME];
 
     event.waitUntil(
@@ -33,7 +33,7 @@ self.addEventListener('activate', function (event) {
             return Promise.all(
                 cacheNames.map(function (cacheName) {
                     if (cacheWhitelist.indexOf(cacheName) === -1) {
-                        console.log("ServiceWorkerA deleting Cache : " + cacheName);
+                        console.log("ServiceWorker deleting Cache : " + cacheName);
                         return caches.delete(cacheName);
                     }
                 })
@@ -43,7 +43,7 @@ self.addEventListener('activate', function (event) {
 });
 
 self.addEventListener('fetch', function (event) {
-    console.log("ServiceWorkerA Fetching...");
+    console.log("ServiceWorker Fetching...");
     event.respondWith(
         caches.match(event.request)
             .then(function (response) {
@@ -73,7 +73,7 @@ self.addEventListener('fetch', function (event) {
 
                         caches.open(CACHE_NAME)
                             .then(function (cache) {
-                                console.log("ServiceWorkerA caching")
+                                console.log("ServiceWorker caching")
                                 cache.put(event.request, responseToCache);
                             });
 
