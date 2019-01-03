@@ -11,17 +11,6 @@ var urlsToCache = [
     'css/style.css',
 ];
 
-self.addEventListener('install', function (event) {
-    console.log("ServiceWorkerA Installing...");
-    // Perform install steps
-    event.waitUntil(
-        caches.open(CACHE_NAME)
-            .then(function (cache) {
-                console.log('ServiceWorkerA Opened cache');
-                return cache.addAll(urlsToCache);
-            })
-    );
-});
 
 self.addEventListener('activate', function (event) {
     console.log("ServiceWorkerA Activating...");
@@ -38,6 +27,18 @@ self.addEventListener('activate', function (event) {
                 })
             );
         })
+    );
+});
+
+self.addEventListener('install', function (event) {
+    console.log("ServiceWorkerA Installing...");
+    // Perform install steps
+    event.waitUntil(
+        caches.open(CACHE_NAME)
+            .then(function (cache) {
+                console.log('ServiceWorkerA Opened cache');
+                return cache.addAll(urlsToCache);
+            })
     );
 });
 
