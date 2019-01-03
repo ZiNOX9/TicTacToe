@@ -1,4 +1,4 @@
-var CACHE_NAME = 'tictactoe-cache-v1';
+var CACHE_NAME = 'tictactoe-v1';
 var urlsToCache = [
     '/',
     '/index.html',
@@ -73,7 +73,7 @@ self.addEventListener('fetch', function (event) {
 
                         caches.open(CACHE_NAME)
                             .then(function (cache) {
-                                console.log("ServiceWorker caching")
+                                console.log("ServiceWorker Caching...")
                                 cache.put(event.request, responseToCache);
                             });
 

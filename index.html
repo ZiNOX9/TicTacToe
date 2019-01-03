@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<!-- <script>
+	<script>
 		if (location.protocol != 'https:')
 		{
 		 location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
 		}
 	</script>
- -->	<meta name="viewport" content="initial-scale=1.0, width=device-width" >
+	<meta name="viewport" content="initial-scale=1.0, width=device-width" >
 	<meta name="Description" content="An Engaging Tic Tac Toe game, that you can add to your homescreen/desktop and play anytime">
 	<meta charset="utf-8">
 
@@ -102,13 +102,13 @@
 	<script>
       if ('serviceWorker' in navigator) {
 			window.addEventListener('load', function () {
-				navigator.serviceWorker.register('/sw.js').then(function (registration) {
+				navigator.serviceWorker.register('/serviceworker.js').then(function (registration) {
 					// Registration was successful
 					registration.update();
-					console.log('ServiceWorkerA registration successful with scope: ', registration.scope);
+					console.log('ServiceWorker registration successful with scope: ', registration.scope);
 				}, function (err) {
 					// registration failed :(
-					console.log('ServiceWorkerA registration failed: ', err);
+					console.log('ServiceWorker registration failed: ', err);
 				});
 			});
 		}
