@@ -1,4 +1,4 @@
-var CACHE_NAME = 'swar-cache-v1';
+var CACHE_NAME = 'tictactoe-v1';
 var urlsToCache = [
     '/',
     '/index.html',
@@ -10,6 +10,10 @@ var urlsToCache = [
     'css/bootstrap.css',    
     'css/style.css'
 ];
+
+try {
+    caches.delete('swar-cache-v1'); 
+}
 
 
 self.addEventListener('install', function (event) {
