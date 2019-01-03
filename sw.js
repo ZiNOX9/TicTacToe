@@ -101,7 +101,7 @@ self.addEventListener('fetch', function (event) {
 
                         caches.open(CACHE_NAME)
                             .then(function (cache) {
-                                console.log("ServiceWorker Caching...")
+                                console.log("ServiceWorker Opening Cache...")
                                 cache.put(event.request, responseToCache);
                             });
 
