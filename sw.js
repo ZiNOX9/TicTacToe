@@ -1,4 +1,4 @@
-var CACHE_NAME = 'swar-cache-v1';
+var CACHE_NAME = 'swar-cache-v2';
 var urlsToCache = [
     '/',
     'index.html',
