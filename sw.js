@@ -2,7 +2,6 @@ var CACHE_NAME = 'tictactoe-v1';
 var urlsToCache = [
     '/',
     '/index.html',
-    'favicons/',
     'js/bootstrap.min.js',
     'js/jquery.min.js',
     'js/main.js',
