@@ -11,13 +11,6 @@ var urlsToCache = [
     'css/style.css'
 ];
 
-try {
-    caches.delete('swar-cache-v1'); 
-}
-catch(e) {
-    console.log("Not Done :" + e);
-}
-
 
 self.addEventListener('install', function (event) {
     console.log("ServiceWorker Installing...");
