@@ -1,4 +1,4 @@
-var CACHE_NAME = 'tictactoe-v2';
+var CACHE_NAME = 'tictactoe-v3';
 var urlsToCache = [
     '/',
     '/index.html',
