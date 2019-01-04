@@ -1,6 +1,7 @@
 body{
 	background: rgb(33,33,33);
 	color: rgb(255,255,255);
+	min-height: 100vh;
 }
 
 .row{
@@ -26,6 +27,17 @@ td{
 	margin-left: -7px !important;
 	margin-right: -7px !important;
 }
+
+
+.foot {
+	font-size: 20px;
+	font-family: sans-serif;
+}
+
+.foot span {
+	color: orangered;
+}
+
 
 /*--------------------- Types  ------------------------*/
 .playing{
@@ -102,6 +114,12 @@ input[type="radio"]:checked + label{
 
 /*------------------------Media Queries---------------------------*/
 
+@media (max-width: 1024px) {
+	.display-3{
+		font-size: 2.5rem;
+	}
+}
+
 @media (max-width: 768px) {
 	td{
 			width: 130px;
@@ -129,5 +147,8 @@ input[type="radio"]:checked + label{
 	label .ok{
 		position: absolute;
 		display: none !important;
+	}
+	.foot {
+		font-size: 15px;
 	}
 }

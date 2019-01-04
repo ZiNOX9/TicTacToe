@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<script>
+	<!-- <script>
 		if (location.protocol != 'https:')
 		{
 		 location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
 		}
-	</script>
+	</script> -->
 	<meta name="viewport" content="initial-scale=1.0, width=device-width" >
 	<meta name="Description" content="An Engaging Tic Tac Toe game, that you can add to your homescreen/desktop and play anytime">
 	<meta charset="utf-8">
@@ -52,47 +52,47 @@
 </head>
 <body id="back">
 
-<div class="row pt-lg-5 pt-2 m-0">
+	<div class="row pt-lg-5 pt-2 m-0">
+		<div class="text-center col-lg-3 col-12 pb-2 pl-0 pr-0 align-self-center">
+				<input type="radio" id="type1" name="gtype">
+			    <label for="type1" id ="label1" class="m-0 p-0"><span class="selectors">Computer</span></label>
 
-	<div class="text-center col-lg-3 col-12 pb-2 pl-0 pr-0 align-self-center">
-			<input type="radio" id="type1" name="gtype">
-		    <label for="type1" id ="label1" class="m-0 p-0"><span class="selectors">Computer</span></label>
+				<input type="radio" id="type2" name="gtype">
+			    <label for="type2" id ="label2" class="p-0"><span class="selectors">Two Player</span></label>
 
-			<input type="radio" id="type2" name="gtype">
-		    <label for="type2" id ="label2" class="p-0"><span class="selectors">Two Player</span></label>
+				<input type="radio" id="type3" name="gtype" checked>
+			    <label for="type3" id ="label3" class="m-0 p-0"><span class="selectors">Unbeatable</span></label>
+		</div>
 
-			<input type="radio" id="type3" name="gtype" checked>
-		    <label for="type3" id ="label3" class="m-0 p-0"><span class="selectors">Unbeatable</span></label>
+
+		<div class="col-lg-6 p-0" align="center">
+			<table class="tb">
+				<tr>
+					<td id="el1"></td>
+					<td id="el2"></td>
+					<td id="el3"></td>
+				</tr>
+				<tr>
+					<td id="el4"></td>
+					<td id="el5"></td>
+					<td id="el6"></td>
+				</tr>
+				<tr>
+					<td id="el7"></td>
+					<td id="el8"></td>
+					<td id="el9"></td>
+				</tr>
+			</table>
+		</div>
+
+
+		<div class="col-lg-3 text-center align-self-center">
+			<h1 id="turn" class="display-3"></h1>
+			<button type="button" class="btn btn-primary btn-lg" id="restart">Restart</button>
+		</div>
 	</div>
 
-
-	<div class="col-lg-6 p-0" align="center">
-		<table class="tb">
-			<tr>
-				<td id="el1"></td>
-				<td id="el2"></td>
-				<td id="el3"></td>
-			</tr>
-			<tr>
-				<td id="el4"></td>
-				<td id="el5"></td>
-				<td id="el6"></td>
-			</tr>
-			<tr>
-				<td id="el7"></td>
-				<td id="el8"></td>
-				<td id="el9"></td>
-			</tr>
-		</table>
-	</div>
-
-
-	<div class="col-lg-3 text-center align-self-center">
-		<h1 id="turn" class="display-3"></h1>
-		<button type="button" class="btn btn-primary btn-lg" id="restart">Restart</button>
-	</div>
-
-</div>
+	<footer class="text-center fixed-bottom bg-inverse foot">Made with <span>❤</span> by Arjun 😊</footer>
 
 	<script type="text/javascript" src="js/jquery.min.js"></script>
 	<script type="text/javascript" src="js/tether.min.js"></script>
